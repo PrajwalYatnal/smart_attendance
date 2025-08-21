@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register Student - Smart Enroll</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #6dd5fa, #2980b9);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 24px;
+      letter-spacing: 1px;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 90vh;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 40px 30px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      margin-top: 15px;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1b4f72;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #555;
+      margin-top: 20px;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: #2c3e50;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    Smart Enroll - Admin Panel
+  </div>
+
+  <div class="container">
+    <div class="form-container">
+      <h2>Register Student</h2>
+      <form method="POST" action="/admin/register-student">
+        <label for="name">Full Name</label>
+        <input type="text" name="name" id="name" required>
+
+        <label for="student_id">ID Number</label>
+        <input type="text" name="student_id" id="student_id" required>
+
+        <label for="Year">SEM</label>
+        <select name="Year" id="Year" required>
+          <option value="">--Select Class--</option>
+          <option value="Year 1">SEM 1</option>
+          <option value="Year 2">SEM 2</option>
+          <option value="Year 3">SEM 3</option>
+          <option value="Year 4">SEM 4</option>
+          <option value="Year 5">SEM 5</option>
+          <option value="Year 6">SEM 6</option>
+          <option value="Year 7">SEM 7</option>
+          <option value="Year 8">SEM 8</option>
+        </select>
+
+        <label for="branch">Branch</label>
+        <input type="text" name="branch" id="branch" required>
+
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="text" name="phone" id="phone" required>
+
+        <label for="login_id">Login ID</label>
+        <input type="text" name="login_id" id="login_id" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+
+        <button type="submit">Capture Face and Register</button>
+      </form>
+
+      <div class="footer">
+        <p><a href="/admin/dashboard">← Back to Dashboard</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flash messages -->
+  <script>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          alert("{{ message }}");
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </script>
+</body>
+</html>

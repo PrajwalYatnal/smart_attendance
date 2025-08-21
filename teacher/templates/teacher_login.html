@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Teacher Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background: #f7f9fc;
+            color: #333;
+        }
+        h1, h3 {
+            color: #2c3e50;
+        }
+        .container {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+        }
+        form {
+            background: white;
+            padding: 20px 30px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            width: 320px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            background-color: #3498db;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .webcam {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            width: 300px;
+        }
+        .ul1 {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Teacher Login</h1>
+
+    <!-- Flash messages for errors or success -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="ul1">
+    <ul>
+        {% for category, message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <form method="POST">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required />
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required />
+
+            <button type="submit">Login</button>
+        </form>
+
+        
+    </div>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+    <script>
+        // Face recognition script if needed
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Attendance Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f7f9fc;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background: white;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f6fc;
+        }
+
+        tr:hover {
+            background-color: #eaf4ff;
+        }
+    </style>
+</head>
+<body>
+    <h2>Attendance Report - {{ subject }} - Class {{ class_name }} - {{ exam_type }}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                {% for date in session_dates %}
+                    <th>Class on {{ date }}</th>
+                {% endfor %}
+                <th>Percentage</th>
+                <th>Eligible</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in report_data %}
+            <tr>
+                <td>{{ student.name }}</td>
+                {% for status in student.attendances %}
+                    <td>{{ "Present" if status else "Absent" }}</td>
+                {% endfor %}
+                <td>{{ student.percentage }}%</td>
+                <td>{{ student.eligible }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!--C:\Users\prajw\Desktop\smart_attendance\admin\templates\signup.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Signup - Smart Enroll</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #6dd5fa, #2980b9);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .signup-container {
+      background-color: white;
+      padding: 40px 30px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .signup-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+      margin-top: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 25px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1b4f72;
+    }
+
+    .message {
+      color: red;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Admin Signup</h2>
+    <form method="POST" action="/admin/signup">
+      <label for="name">Full Name</label>
+      <input type="text" name="name" id="name" required>
+
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" required>
+
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required>
+
+      <label for="confirm_password">Confirm Password</label>
+      <input type="confirm_password" name="confirm_password" id="confirm_password" required>
+
+      <label for="admin_id">Admin ID</label>
+      <input type="text" name="admin_id" id="admin_id" required>
+
+      <button type="submit">Register</button>
+    </form>
+
+    <div class="footer">
+      Already have an account? <a href="/admin/login">Login</a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <script>
+          {% for category, message in messages %}
+            alert("{{ message }}");
+          {% endfor %}
+        </script>
+      {% endif %}
+    {% endwith %}
+  </div>
+</body>
+</html>

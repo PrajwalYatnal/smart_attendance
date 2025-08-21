@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Face Data</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f2f4f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 6px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #21618c;
+        }
+
+        .note {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .user-details {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .user-details p {
+            margin: 8px 0;
+        }
+
+        .flash-message {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .info {
+            color: blue;
+        }
+
+        .back-link {
+            margin-top: 30px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Update Face Data</h2>
+
+    {% if not user_data %}
+        <form method="POST" action="{{ url_for('update_face_data') }}">
+            <label for="role">Role:</label>
+            <select name="role" required>
+                <option value="">Select Role</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+            </select>
+
+            <label for="person_id">Enter ID (Student/Teacher ID):</label>
+            <input type="text" name="person_id" required>
+
+            <button type="submit">Load User</button>
+        </form>
+    {% else %}
+        <div class="user-details">
+            <h3>User Details:</h3>
+            <p><strong>Name:</strong> {{ user_data.name }}</p>
+            <p><strong>Email:</strong> {{ user_data.email }}</p>
+            <p><strong>ID:</strong> {{ user_data.person_id }}</p>
+            <p><strong>Department/Year:</strong> {{ user_data.extra }}</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('confirm_face_update') }}">
+            <input type="hidden" name="role" value="{{ user_data.role }}">
+            <input type="hidden" name="person_id" value="{{ user_data.person_id }}">
+            <p>Do you want to update this user's face data?</p>
+            <button type="submit">Yes, Capture New Face</button>
+        </form>
+    {% endif %}
+
+    <p class="note">Note: This will overwrite the existing face data.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="back-link">
+        <a href="/admin/dashboard">← Back to Dashboard</a>
+    </div>
+</body>
+</html>

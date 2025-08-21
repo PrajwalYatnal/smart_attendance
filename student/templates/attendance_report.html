@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Attendance Report</h1>
+
+    <form method="POST">
+        <label>Subject</label>
+        <select name="subject_name" required>
+            {% for subj in subjects %}
+                <option value="{{ subj }}" {% if subj == selected_subject %}selected{% endif %}>{{ subj }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Exam Type</label>
+        <select name="exam_type" required>
+            <option value="IA1" {% if exam_type == 'IA1' %}selected{% endif %}>IA1 (65%)</option>
+            <option value="IA2" {% if exam_type == 'IA2' %}selected{% endif %}>IA2 (75%)</option>
+            <option value="IA3" {% if exam_type == 'IA3' %}selected{% endif %}>IA3 (85%)</option>
+            <option value="SEE" {% if exam_type == 'SEE' %}selected{% endif %}>SEE (75%)</option>
+        </select>
+
+        <button type="submit">Generate Report</button>
+    </form>
+
+    {% if report_data %}
+        <h2>Report for {{ selected_subject }} ({{ exam_type }})</h2>
+        <table>
+            <tr>
+                {% for date in session_dates %}
+                    <th>{{ date }}</th>
+                {% endfor %}
+                <th>Percentage</th>
+                <th>Status</th>
+            </tr>
+            {% for student in report_data %}
+            <tr>
+                {% for status in student.attendances %}
+                    <td>{{ "Present" if status else "Absent" }}</td>
+                {% endfor %}
+                <td>{{ student.percentage }}%</td>
+                <td>{{ student.eligible }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <p><a href="{{ url_for('dashboard') }}"><button>← Back to Dashboard</button></a></p>
+</body>
+</html>

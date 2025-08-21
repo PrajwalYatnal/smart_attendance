@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Exam Dates</title>
+</head>
+<body>
+    <h2>Update Internal & SEE Exam Dates</h2>
+
+    <form method="POST">
+        <label>IA1 Date:</label>
+        <input type="date" name="IA1" value="{{ exam_doc.IA1.strftime('%Y-%m-%d') if exam_doc else '' }}" required><br><br>
+
+        <label>IA2 Date:</label>
+        <input type="date" name="IA2" value="{{ exam_doc.IA2.strftime('%Y-%m-%d') if exam_doc else '' }}" required><br><br>
+
+        <label>IA3 Date:</label>
+        <input type="date" name="IA3" value="{{ exam_doc.IA3.strftime('%Y-%m-%d') if exam_doc else '' }}" required><br><br>
+
+        <label>SEE Date:</label>
+        <input type="date" name="SEE" value="{{ exam_doc.SEE.strftime('%Y-%m-%d') if exam_doc else '' }}" required><br><br>
+
+        <button type="submit">Update Dates</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('admin_dashboard') }}">← Back to Dashboard</a>
+
+    <!-- Flash messages -->
+    <script>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            alert("{{ message }}");
+        {% endfor %}
+    {% endwith %}
+    </script>
+</body>
+</html>

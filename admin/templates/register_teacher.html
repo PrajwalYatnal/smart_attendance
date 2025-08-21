@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register Teacher - Smart Enroll</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #8360c3, #2ebf91);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 24px;
+      letter-spacing: 1px;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 90vh;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 40px 30px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+      margin-top: 15px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button, input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover, input[type="submit"]:hover {
+      background-color: #1a252f;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #555;
+      margin-top: 20px;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: #2c3e50;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    Smart Enroll - Admin Panel
+  </div>
+
+  <div class="container">
+    <div class="form-container">
+      <h2>Register Teacher</h2>
+      <form method="POST" action="{{ url_for('register_teacher') }}">
+        <label for="name">Full Name</label>
+        <input type="text" name="name" required>
+
+        <label for="teacher_id">Teacher ID</label>
+        <input type="text" name="teacher_id" required>
+
+        <label for="email">Email</label>
+        <input type="email" name="email" required>
+
+        <label for="department">Department</label>
+        <input type="text" name="department" required>
+
+        <label for="login_id">Login ID</label>
+        <input type="text" name="login_id" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" required>
+
+        <label for="subjects">Subjects (comma-separated)</label>
+        <input type="text" name="subjects" required>
+
+        <label for="classes">Classes (comma-separated)</label>
+        <input type="text" name="classes" required>
+
+        <input type="submit" value="Register">
+      </form>
+
+      <div class="footer">
+        <p><a href="{{ url_for('admin_dashboard') }}">← Back to Dashboard</a></p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

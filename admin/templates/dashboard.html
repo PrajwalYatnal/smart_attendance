@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Smart Enroll</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .summary-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+        .summary-box {
+            width: 220px;
+            height: 120px;
+            background: #007BFF;
+            color: white;
+            border-radius: 10px;
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .summary-box:nth-child(2) { background: #28a745; }
+        .summary-box:nth-child(3) { background: #ffc107; color: black; }
+        .summary-box:nth-child(4) { background: #6f42c1; }
+        .summary-box:nth-child(5) { background: #17a2b8; }
+        .summary-box h3 { margin: 0; font-size: 24px; }
+        .summary-box p { margin: 5px 0 0; font-size: 16px; }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            padding: 20px;
+            background-color: #eee;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dashboard-container {
+            width: 80%;
+            margin: auto;
+            margin-top: 50px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h1>Welcome, Admin {{ name }}</h1>
+
+        <!-- Summary section -->
+        <div class="summary-container">
+            <div class="summary-box">
+                <h3>{{ total_students }}</h3>
+                <p>Total Students</p>
+            </div>
+            <div class="summary-box">
+                <h3>{{ total_teachers }}</h3>
+                <p>Total Teachers</p>
+            </div>
+            <div class="summary-box">
+                <h3>{{ total_sessions }}</h3>
+                <p>Total Sessions</p>
+            </div>
+            <div class="summary-box">
+                <h3>{{ unique_classes }}</h3>
+                <p>Classes Covered</p>
+            </div>
+            <div class="summary-box">
+                <h3>{{ unique_subjects }}</h3>
+                <p>Subjects Taught</p>
+            </div>
+        </div>
+
+        <!-- Navigation Cards -->
+        <div class="card-container">
+            <a href="/admin/register-student" class="card">Register Student</a>
+            <a href="/admin/register-teacher" class="card">Register Teacher</a>
+            <a href="/admin/generate-report" class="card">Generate Reports</a>
+            <a href="/admin/attendance-overview" class="card">Attendance Overview</a>
+            <a href="/admin/manage-users" class="card">Manage Users</a>
+            <a href="/admin/update-face-data" class="card">Update Face Data</a>
+            <a href="/admin/update-exam-dates" class="card">Update Exam Dates</a>
+        </div>
+
+        <!-- Logout -->
+        <form method="POST" action="/admin/logout" style="text-align: center; margin-top: 30px;">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+
+    <!-- Alert messages -->
+    <script>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    alert("{{ message }}");
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Overview - Admin</title>
+    <style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to right, #2c3e50, #3498db);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        color: #333;
+    }
+
+    h1 {
+        color: white;
+        margin-top: 30px;
+    }
+
+    form {
+        background: white;
+        padding: 25px 30px;
+        border-radius: 10px;
+        margin-top: 20px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        width: 90%;
+        max-width: 700px;
+    }
+
+    label {
+        font-weight: 600;
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 5px;
+    }
+
+    select, input[type="text"], button {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    button {
+        background-color: #2c3e50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #1a252f;
+    }
+
+    table {
+        width: 90%;
+        max-width: 900px;
+        margin: 25px auto;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        border: 1px solid #e0e0e0;
+        text-align: center;
+    }
+
+    th {
+        background-color: #2c3e50;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #eaf2f8;
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+        border-radius: 4px;
+        background-color: #2980b9;
+        color: white;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+    .action-btn:hover {
+        background-color: #1c5980;
+    }
+
+    .back-link {
+        margin-top: 20px;
+        background-color: #ffffff;
+        color: #2c3e50;
+        padding: 10px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-link:hover {
+        background-color: #dfe6e9;
+    }
+</style>
+
+</head>
+<body>
+
+    <h1>Attendance Overview</h1>
+
+    <form method="POST">
+        <label>Class:</label>
+        <select name="class_name" required>
+            <option value="">Select Class</option>
+            {% for c in classes %}
+                <option value="{{ c }}" {% if c == selected_class %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Subject:</label>
+        <select name="subject" required>
+            <option value="">Select Subject</option>
+            {% for s in subjects %}
+                <option value="{{ s }}" {% if s == selected_subject %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+
+        {% if selected_class and selected_subject %}
+            <label for="session_id">Session ID:</label>
+            <select name="session_id" required>
+            <option value="">Select Session</option>
+            {% for s in session_options %}
+            <option value="{{ s.session_id }}" {% if s.disabled %}disabled style="color:gray;"{% endif %}
+                {% if s.session_id == session_id %}selected{% endif %}>
+                {{ s.session_id }} - {{ s.timestamp }}
+            </option>
+        {% endfor %}
+</select>
+
+        {% endif %}
+
+        <button type="submit">View Attendance</button>
+    </form>
+
+    {% if attendance_data %}
+        <h2 style="margin-top: 30px; color: white;">Attendance Data</h2>
+        <table>
+            <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for student in attendance_data %}
+                <tr>
+                    <td>{{ student.student_id }}</td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ "Present" if student.present else "Absent" }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('update_attendance') }}" >
+                            <input type="hidden" name="student_id" value="{{ student.student_id }}">
+                            <input type="hidden" name="session_id" value="{{ session_id }}">
+                            <input type="hidden" name="class_name" value="{{ selected_class }}">
+                            <input type="hidden" name="subject" value="{{ selected_subject }}">
+                            <input type="hidden" name="new_status" value="{{ 'false' if student.present else 'true' }}">
+                            <button type="submit" class="action-btn">
+                                Mark {{ 'Absent' if student.present else 'Present' }}
+                            </button>
+
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <a href="{{ url_for('admin_dashboard') }}" class="back-link">← Back to Dashboard</a>
+
+    <script>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                alert("{{ message }}");
+            {% endfor %}
+        {% endwith %}
+    </script>
+
+</body>
+</html>

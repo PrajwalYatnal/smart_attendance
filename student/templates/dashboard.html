@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h2>Welcome {{ name }}</h2>
+    <a href="{{ url_for('attendance_report') }}"><button>View Attendance Report</button></a><br><br>
+    <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+</body>
+</html>

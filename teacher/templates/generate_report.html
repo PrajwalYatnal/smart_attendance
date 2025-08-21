@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Generate Attendance Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+        }
+
+        form {
+            background-color: white;
+            color: #2c3e50;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1.5px solid #ccc;
+            outline-color: #3498db;
+        }
+
+        button[type="submit"] {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1a252f;
+        }
+
+        /* Back to dashboard footer button */
+        .back-footer {
+            margin-top: 30px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .back-footer a {
+            background-color: white;
+            color: #2c3e50;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-footer a:hover {
+            background-color: #dfe6e9;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Generate Attendance Report</h2>
+
+    <form method="POST">
+        <label for="class_name">Class:</label>
+        <select id="class_name" name="class_name" required>
+            <option value="" disabled selected>Select Class</option>
+            {% for cls in classes %}
+                <option value="{{ cls }}">{{ cls }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="subject_name">Subject:</label>
+        <select id="subject_name" name="subject_name" required>
+            <option value="" disabled selected>Select Subject</option>
+            {% for subj in subjects %}
+                <option value="{{ subj }}">{{ subj }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="exam_type">Exam Type:</label>
+        <select id="exam_type" name="exam_type" required>
+            <option value="IA1">IA1 (65%)</option>
+            <option value="IA2">IA2 (75%)</option>
+            <option value="IA3">IA3 (85%)</option>
+            <option value="SEE">SEE (75%)</option>
+        </select>
+
+        <button type="submit">Generate Report</button>
+    </form>
+
+    <div class="back-footer">
+        <a href="{{ url_for('teacher_dashboard') }}">← Back to Dashboard</a>
+    </div>
+
+</body>
+</html>
